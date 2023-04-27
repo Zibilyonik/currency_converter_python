@@ -1,8 +1,17 @@
+#Python3
+import json
+import requests
+
+def load_data(url):
+    response = requests.get(url)
+    return json.loads(response.text)
 
 def main():
-    count = input()
-    values = {"RUB": 2.98, "ARS": 0.82,
-              "HNL": 0.17, "AUD": 1.9622, "MAD": 0.208}
-    for exchange in values.items():
-        print(
-            f'I will get {float(values[exchange]) * float(count)} {exchange} from the sale of {count} conicoins.')
+    currency = input()
+    currency_val = load_data(f'http://www.floatrates.com/daily/{currency}.json')
+    print(currency_val['usd'])
+    print(currency_val['eur'])
+
+
+if __name__ == '__main__':
+    main()
